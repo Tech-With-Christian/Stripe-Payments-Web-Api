@@ -9,6 +9,22 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Stripe.net" Version="40.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Stripe.net" />
+    <None Remove="Models\" />
+    <None Remove="Models\Stripe\" />
+    <None Remove="Contracts\" />
+    <None Remove="Application\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\Stripe\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Application\" />
+  </ItemGroup>
 </Project>
