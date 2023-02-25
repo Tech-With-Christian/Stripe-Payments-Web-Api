@@ -1,7 +1,0 @@
-name: .NET Core Desktop
-uses: codecov/codecov-action@v3
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
