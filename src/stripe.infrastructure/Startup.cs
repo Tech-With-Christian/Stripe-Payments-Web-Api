@@ -12,8 +12,8 @@ namespace stripe.infrastructure
         {
             // Register Services
             services.AddStripeServices(configuration);
-            services.AddCommonServices();
-            
+            Common.AddServices(services);
+
             return services;
         }
     }

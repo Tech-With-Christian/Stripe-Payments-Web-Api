@@ -1,12 +1,15 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using stripe.application.Services.Stripe;
 using stripe.domain.Models.Stripe.Customers;
 using stripe.domain.Models.Stripe.Payments;
+using stripe.shared.Common.Attributes;
 using Stripe;
 
 namespace stripe.infrastructure.Services.Stripe
 {
+    [LifetimeAttribute(ServiceLifetime.Scoped)]
     public class StripeService : IStripeService
     {
         private readonly ChargeService _chargeService;

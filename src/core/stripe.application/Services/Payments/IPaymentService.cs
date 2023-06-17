@@ -3,7 +3,7 @@ using stripe.domain.Models.Payments;
 
 namespace stripe.application.Services.Payments
 {
-    public interface IPaymentService
+    public interface IPaymentService : IBaseService
     {
         Task<Payment> GetPaymentByIdAsync(Guid paymentId);
         Task<Payment> GetPaymentByStripeIdAsync(string stripePaymentId);
