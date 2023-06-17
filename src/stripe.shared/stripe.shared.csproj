@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DTOs\" />
+    <None Remove="DTOs\Stripe\" />
+    <None Remove="DTOs\Stripe\Payments\" />
+    <None Remove="DTOs\Customers\" />
+    <None Remove="DTOs\Payments\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Stripe\" />
+    <Folder Include="DTOs\Stripe\Payments\" />
+    <Folder Include="DTOs\Customers\" />
+    <Folder Include="DTOs\Payments\" />
+  </ItemGroup>
+</Project>
