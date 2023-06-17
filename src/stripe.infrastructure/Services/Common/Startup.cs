@@ -1,112 +1,53 @@
 ﻿using System;
-using stripe.application.Services.Common;
-using Serilog;
 using Microsoft.Extensions.DependencyInjection;
+using stripe.shared.Common.Attributes;
+using System.Reflection;
+using stripe.application.Services;
 
 namespace stripe.infrastructure.Services.Common
 {
-    internal static class Startup
+    internal static class Common
     {
-        /// <summary>
-        /// Add Services to DI container automatically.
-        /// </summary>
-        /// <param name="services">Services</param>
-        /// <returns>Service collection with registered services with their respective lifetime in the service container</returns>
-        internal static IServiceCollection AddCommonServices(this IServiceCollection services)
+        internal static void AddServices(IServiceCollection services)
         {
+            var applicationAssembly = Assembly.GetAssembly(typeof(IBaseService));
+            var infrastructureAssembly = Assembly.GetAssembly(typeof(Startup));
 
-            #region Transient Services
+            var interfaceTypes = applicationAssembly.GetExportedTypes()
+                .Where(t => t.IsInterface)
+                .ToList();
 
-            var transientServiceType = typeof(ITransientService);
-
-            // Get services inheriting transient service
-            var transientServices = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(transientServiceType.IsAssignableFrom)
-                .Where(p => p.IsClass && !p.IsAbstract)
-                .Select(p => new
-                {
-                    Service = p.GetInterfaces().FirstOrDefault(),
-                    Implementation = p
-                });
-
-            // Register each transient service for startup
-            if (transientServices.Count() > 0)
+            foreach (var interfaceType in interfaceTypes)
             {
-                Log.Information($"Registering {transientServices.Count()} Transient Service(s)");
-                foreach (var transientService in transientServices)
+                var implementationType = infrastructureAssembly.GetExportedTypes()
+                    .FirstOrDefault(t => t.IsClass && interfaceType.IsAssignableFrom(t));
+
+                if (implementationType != null)
                 {
-                    if (transientServiceType.IsAssignableFrom(transientService.Service))
-                    {
-                        services.AddTransient(transientService.Service, transientService.Implementation);
-                    }
+                    var lifetimeAttribute = implementationType.GetCustomAttribute<LifetimeAttribute>();
+                    var lifetime = lifetimeAttribute?.Lifetime ?? ServiceLifetime.Transient;
+
+                    services.AddService(interfaceType, implementationType, lifetime);
                 }
             }
+        }
 
-            #endregion
-
-            #region Scoped Services
-
-            var scopedServiceType = typeof(IScopedService);
-
-            // Get services inheriting scoped service
-            var scopedServices = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(scopedServiceType.IsAssignableFrom)
-                .Where(p => p.IsClass && !p.IsAbstract)
-                .Select(p => new
-                {
-                    Service = p.GetInterfaces().FirstOrDefault(),
-                    Implementation = p
-                });
-
-            // Register each scoped service for startup
-            if (scopedServices.Count() > 0)
+        private static void AddService(this IServiceCollection services, Type serviceType, Type implementationType, ServiceLifetime lifetime)
+        {
+            switch (lifetime)
             {
-                Log.Information($"Registering {scopedServices.Count()} Scoped Service(s)");
+                case ServiceLifetime.Transient:
+                    services.AddTransient(serviceType, implementationType);
+                    break;
+                case ServiceLifetime.Scoped:
+                    services.AddScoped(serviceType, implementationType);
+                    break;
+                case ServiceLifetime.Singleton:
+                    services.AddSingleton(serviceType, implementationType);
+                    break;
+                default:
+                    throw new ArgumentException("Invalid lifetime", nameof(lifetime));
             }
-            foreach (var scopedService in scopedServices)
-            {
-                if (scopedServiceType.IsAssignableFrom(scopedService.Service))
-                {
-                    services.AddTransient(scopedService.Service, scopedService.Implementation);
-                }
-            }
-
-            #endregion Scoped Services
-
-            #region Singleton Services
-
-            var singletonServiceType = typeof(ISingletonService);
-
-            // Get services inheriting singleton service
-            var singletonServices = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(singletonServiceType.IsAssignableFrom)
-                .Where(p => p.IsClass && !p.IsAbstract)
-                .Select(p => new
-                {
-                    Service = p.GetInterfaces().FirstOrDefault(),
-                    Implementation = p
-                });
-
-            // Register each singleton service for startup
-            if (singletonServices.Count() > 0)
-            {
-                Log.Information($"Registering {singletonServices.Count()} Singleton Service(s)");
-            }
-            foreach (var singletonService in singletonServices)
-            {
-                if (singletonServiceType.IsAssignableFrom(singletonService.Service))
-                {
-                    services.AddScoped(singletonService.Service, singletonService.Implementation);
-                }
-            }
-
-            #endregion Singleton Services
-
-            return services;
-
         }
     }
 }

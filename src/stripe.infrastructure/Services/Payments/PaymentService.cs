@@ -1,9 +1,12 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using stripe.application.Services.Payments;
 using stripe.domain.Models.Payments;
+using stripe.shared.Common.Attributes;
 
 namespace stripe.infrastructure.Services.Payments
 {
+    [LifetimeAttribute(ServiceLifetime.Transient)]
     public class PaymentService : IPaymentService
     {
         public PaymentService()

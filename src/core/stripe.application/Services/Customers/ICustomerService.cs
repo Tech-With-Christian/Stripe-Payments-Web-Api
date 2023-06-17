@@ -3,7 +3,7 @@ using stripe.domain.Models.Customers;
 
 namespace stripe.application.Services.Customers
 {
-    public interface ICustomerService
+    public interface ICustomerService : IBaseService
     {
         Task<Customer> GetCustomerByIdAsync(Guid customerId);
         Task<Customer> GetCustomerByStripeIdAsync(string stripeId);

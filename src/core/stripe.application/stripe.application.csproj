@@ -7,20 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Services\" />
-    <None Remove="Services\Stripe\" />
-    <None Remove="Services\Customers\" />
-    <None Remove="Services\Payments\" />
     <None Remove="Features\" />
     <None Remove="Features\Customers\" />
     <None Remove="Features\Payments\" />
     <None Remove="Features\Stripe\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Services\Stripe\" />
-    <Folder Include="Services\Customers\" />
-    <Folder Include="Services\Payments\" />
     <Folder Include="Features\" />
     <Folder Include="Features\Customers\" />
     <Folder Include="Features\Payments\" />
