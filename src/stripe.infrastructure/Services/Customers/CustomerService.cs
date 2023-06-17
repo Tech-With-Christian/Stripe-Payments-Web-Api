@@ -1,9 +1,12 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using stripe.application.Services.Customers;
 using stripe.domain.Models.Customers;
+using stripe.shared.Common.Attributes;
 
 namespace stripe.infrastructure.Services.Customers
 {
+    [LifetimeAttribute(ServiceLifetime.Transient)]
     public class CustomerService : ICustomerService
     {
         public CustomerService()
