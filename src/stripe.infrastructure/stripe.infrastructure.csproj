@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\" />
+    <None Remove="Services\Common\" />
+    <None Remove="Serilog" />
+    <None Remove="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Services\Stripe\" />
+    <None Remove="Stripe.net" />
+    <None Remove="Microsoft.Extensions.Configuration.Binder" />
+    <None Remove="Microsoft.Extensions.Logging.Abstractions" />
+    <None Remove="Services\Payments\" />
+    <None Remove="Services\Customers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Services\Common\" />
+    <Folder Include="Services\Stripe\" />
+    <Folder Include="Services\Payments\" />
+    <Folder Include="Services\Customers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\core\stripe.application\stripe.application.csproj" />
+    <ProjectReference Include="..\stripe.shared\stripe.shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.12.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Stripe.net" Version="41.20.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+  </ItemGroup>
+</Project>
