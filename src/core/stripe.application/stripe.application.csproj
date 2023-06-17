@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Remove="Services\" />
-    <None Remove="Services\Common\" />
     <None Remove="Services\Stripe\" />
     <None Remove="Services\Customers\" />
     <None Remove="Services\Payments\" />
@@ -19,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Services\Common\" />
     <Folder Include="Services\Stripe\" />
     <Folder Include="Services\Customers\" />
     <Folder Include="Services\Payments\" />

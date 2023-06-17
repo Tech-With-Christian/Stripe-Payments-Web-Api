@@ -1,10 +1,9 @@
 ﻿using System;
-using stripe.application.Services.Common;
 using stripe.domain.Models.Customers;
 
 namespace stripe.application.Services.Customers
 {
-    public interface ICustomerService : ITransientService
+    public interface ICustomerService
     {
         Task<Customer> GetCustomerByIdAsync(Guid customerId);
         Task<Customer> GetCustomerByStripeIdAsync(string stripeId);
