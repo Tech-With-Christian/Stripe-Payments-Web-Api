@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Stripe.net" Version="40.14.0" />
+    <PackageReference Include="Stripe.net" Version="41.28.0" />
   </ItemGroup>
 
   <ItemGroup>
